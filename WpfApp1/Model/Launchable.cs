@@ -42,9 +42,9 @@ namespace QuickLaunch.Model
         /// </summary>
         /// <param name="asAdmin">Execute with administrative priviledges.</param>
         /// <param name="useShell">Open a command-line shell, then execute from it.</param>
-        public void Start(bool asAdmin = false, bool useShell = false)
+        public void Start(bool useShell = false)
         {
-            processStart.UseShellExecute = asAdmin;
+            processStart.UseShellExecute = AsAdmin;
             processStart.Verb = "runas";
 
             if (useShell)
