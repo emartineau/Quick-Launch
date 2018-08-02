@@ -22,6 +22,12 @@ namespace QuickLaunch.Model
 
         public FileSystemInfo Info { get; }
 
+        /// <summary>
+        /// Launchable constructor.
+        /// </summary>
+        /// <param name="path">Path of file or directory to be launched.</param>
+        /// <param name="arguments">Arguments for execution.</param>
+        /// <param name="asAdmin">Execute with administrative priviledges.</param>
         public Launchable(string path, string arguments, bool asAdmin = false)
         {
             Info = new FileInfo(path);
@@ -31,12 +37,17 @@ namespace QuickLaunch.Model
             InitializeProcess(arguments);
         }
 
-        public void Start(bool asAdmin = false, bool shellFirst = false)
+        /// <summary>
+        /// Starts the launchable.
+        /// </summary>
+        /// <param name="asAdmin">Execute with administrative priviledges.</param>
+        /// <param name="useShell">Open a command-line shell, then execute from it.</param>
+        public void Start(bool asAdmin = false, bool useShell = false)
         {
             processStart.UseShellExecute = asAdmin;
             processStart.Verb = "runas";
 
-            if (shellFirst)
+            if (useShell)
             {
                 Process.Start(Shell, processStart.Arguments);
             }
