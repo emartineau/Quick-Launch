@@ -11,21 +11,21 @@ namespace QuickLaunch.Model
     /// <summary>
     /// Makes a specified file or directory launchable by the launcher.
     /// </summary>
-    class Launchable
+    abstract class Launchable
     {
-        private ProcessStartInfo processStart;
+        protected ProcessStartInfo processStart;
 
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public FileInfo File { get; }
+        
+        public FileSystemInfo Info { get; }
         public DirectoryInfo WorkingDirectory { get; set; }
 
         public bool AsAdmin { get; set; }
         public bool UseShell { get; set; }
         public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "Powershell.exe");
+        public string ShellPrefix { get; set; } //precedes filepath to execute via a PATH variable i.e. "Python'
 
-        public FileSystemInfo Info { get; }
 
         /// <summary>
         /// Launchable constructor.
@@ -35,47 +35,11 @@ namespace QuickLaunch.Model
         /// <param name="asAdmin">Execute with administrative priviledges.</param>
         public Launchable(string path, string arguments, bool asAdmin = false)
         {
-            Info = new FileInfo(path);
-            if (!Info.Exists)
-                Info = new DirectoryInfo(path);
-
-            InitializeProcess(arguments);
         }
 
         /// <summary>
         /// Starts the launchable.
         /// </summary>
-        /// <param name="asAdmin">Execute with administrative priviledges.</param>
-        public void Start()
-        {
-            if (AsAdmin)
-            {
-            processStart.UseShellExecute = AsAdmin;
-            processStart.Verb = "runas";
-            }
-
-            if (UseShell)
-            {
-                Process.Start(Shell, processStart.FileName + processStart.Arguments);
-            }
-            else
-            {
-                Process p = new Process
-                {
-                    StartInfo = processStart
-                };
-
-                p.Start();
-            }
-        }
-
-        private void InitializeProcess(string arguments)
-        {
-            processStart = new ProcessStartInfo(File.FullName)
-            {
-                Arguments = arguments,
-                WorkingDirectory = this.WorkingDirectory.FullName
-            };
-        }
+        public abstract void Start();
     }
 }

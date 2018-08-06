@@ -75,6 +75,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\LaunchableDirectory.cs" />
+    <Compile Include="Model\LaunchableFile.cs" />
     <Compile Include="ViewModel\QLViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

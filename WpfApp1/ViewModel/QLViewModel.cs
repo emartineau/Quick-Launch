@@ -12,7 +12,5 @@ namespace QuickLaunch.ViewModel
         private Launcher launcher;
 
         public Dictionary<string, Launchable> Launchables { get => launcher.launchables; set => launcher.launchables = value; }
-
-
     }
 }
