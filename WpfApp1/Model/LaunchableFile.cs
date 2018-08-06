@@ -43,7 +43,7 @@ namespace QuickLaunch.Model
 
         private void InitializeProcess(string arguments)
         {
-            base.processStart = new ProcessStartInfo(File.FullName)
+            base.processStart = new ProcessStartInfo(Info.FullName)
             {
                 Arguments = arguments,
                 WorkingDirectory = this.WorkingDirectory.FullName
