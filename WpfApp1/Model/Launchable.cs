@@ -15,10 +15,15 @@ namespace QuickLaunch.Model
     {
         private ProcessStartInfo processStart;
 
+        public string Name { get; set; }
+        public string Description { get; set; }
+
         public FileInfo File { get; }
         public DirectoryInfo WorkingDirectory { get; set; }
-        public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "cmd.exe");
+
         public bool AsAdmin { get; set; }
+        public bool UseShell { get; set; }
+        public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "Powershell.exe");
 
         public FileSystemInfo Info { get; }
 
@@ -41,15 +46,17 @@ namespace QuickLaunch.Model
         /// Starts the launchable.
         /// </summary>
         /// <param name="asAdmin">Execute with administrative priviledges.</param>
-        /// <param name="useShell">Open a command-line shell, then execute from it.</param>
-        public void Start(bool useShell = false)
+        public void Start()
         {
+            if (AsAdmin)
+            {
             processStart.UseShellExecute = AsAdmin;
             processStart.Verb = "runas";
+            }
 
-            if (useShell)
+            if (UseShell)
             {
-                Process.Start(Shell, processStart.Arguments);
+                Process.Start(Shell, processStart.FileName + processStart.Arguments);
             }
             else
             {
