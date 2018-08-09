@@ -13,10 +13,16 @@ namespace QuickLaunch.ViewModel
         public readonly Launcher Launcher;
 
         public Dictionary<string, Launchable> Launchables { get => Launcher.launchables; set => Launcher.launchables = value; }
+        public ICommand SaveConfig;
 
         public QLViewModel()
         {
             Launcher = new Launcher();
+        }
+
+        private void InitCommands()
+        {
+            SaveConfig = new LauncherOpCommand(this, LauncherOps.SaveOp);
         }
     }
 }
