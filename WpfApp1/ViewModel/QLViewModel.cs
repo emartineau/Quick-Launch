@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace QuickLaunch.ViewModel
 {
     class QLViewModel
     {
-        private Launcher launcher;
+        public readonly Launcher Launcher;
 
-        public Dictionary<string, Launchable> Launchables { get => launcher.launchables; set => launcher.launchables = value; }
+        public Dictionary<string, Launchable> Launchables { get => Launcher.launchables; set => Launcher.launchables = value; }
 
         public QLViewModel()
         {
-            launcher = new Launcher();
+            Launcher = new Launcher();
         }
     }
 }

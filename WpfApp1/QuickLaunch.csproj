@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\LaunchableDirectory.cs" />
     <Compile Include="Model\LaunchableFile.cs" />
+    <Compile Include="ViewModel\LauncherOps.cs" />
     <Compile Include="ViewModel\QLViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -124,7 +125,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Icons\Firefox Dark.ico" />
+    <Resource Include="Assets\Icons\QLIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

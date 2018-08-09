@@ -13,9 +13,7 @@ namespace QuickLaunch.Model
         private DirectoryInfo directoryInfo;
         public new FileSystemInfo Info { get; }
 
-        public LaunchableDirectory(string path, string arguments, bool asAdmin = false) : base(path, arguments, asAdmin)
-        {
-        }
+        public LaunchableDirectory(string path, string arguments, bool asAdmin = false) : base(path, arguments, asAdmin) { }
 
         public override void Start()
         {
