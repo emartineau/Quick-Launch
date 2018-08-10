@@ -12,6 +12,11 @@
     <tb:TaskbarIcon x:Name="NotifyIcon"
                     Visibility="Visible"
                     IconSource="Assets\Icons\QLIcon.ico"
-                    MenuActivation="LeftOrRightClick"
-                    />
+                    MenuActivation="LeftOrRightClick">
+        <tb:TaskbarIcon.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Save Profile" Command="{Binding SaveConfig}"/>
+            </ContextMenu>
+        </tb:TaskbarIcon.ContextMenu>
+    </tb:TaskbarIcon>
 </Window>

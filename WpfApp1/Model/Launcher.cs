@@ -4,26 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using DansCSharpLibrary.Serialization;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace QuickLaunch.Model
 {
+    using Launchables = Dictionary<string, Launchable>;
     /// <summary>
     /// The application's model. Stores and interprets user-defined Launchables. Facilitates ViewModel's interaction with Launchables.
     /// </summary>
     class Launcher
     {
-        public string SavePath { get; set; }
-        public Dictionary<string, Launchable> launchables;
+        public string SavePath { get; set; } = $"{Path.Combine(Environment.SpecialFolder.ApplicationData.ToString(), "QuickLaunch/loadout.cfg")}";
+        public Launchables launchables;
 
         public Launcher()
         {
-            launchables = XmlSerialization.ReadFromXmlFile<Dictionary<string, Launchable>>(SavePath)?? new Dictionary<string, Launchable>();
+            launchables = Directory.Exists(SavePath) ? JsonConvert.DeserializeObject<Launchables>(SavePath) : new Launchables();
         }
 
         public void SaveToFile()
         {
-            XmlSerialization.WriteToXmlFile(SavePath, launchables);
+            var saveFileText = JsonConvert.SerializeObject(launchables);
+            using (StreamWriter sw = new StreamWriter(SavePath))
+            {
+                sw.Write(saveFileText);
+                sw.Close();
+            }
         }
     }
 }
