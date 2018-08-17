@@ -17,7 +17,7 @@ namespace QuickLaunch.ViewModel
             Launcher = new Launcher();
         }
 
-        public Dictionary<string, ILaunchable> Launchables { get => Launcher.Launchables; set => Launcher.Launchables = value; }
+        public IDictionary<string, ILaunchable> Launchables { get => Launcher.Launchables; set => Launcher.Launchables = value; }
         public IDictionary<string ,ICommand> LaunchableExecutables { get; set; }
         public ICommand SaveConfig { get; set; }
 

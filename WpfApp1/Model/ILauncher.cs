@@ -9,9 +9,9 @@ namespace QuickLaunch.Model
     interface ILauncher
     {
         string SavePath { get; set; }
-        Dictionary<string, ILaunchable> Launchables { get; set; }
+        IDictionary<string, ILaunchable> Launchables { get; set; }
 
         void WriteToFile();
-        Dictionary<string, ILaunchable> ReadFromFile();
+        IDictionary<string, ILaunchable> ReadFromFile();
     }
 }

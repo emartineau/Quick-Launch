@@ -9,7 +9,7 @@ using System.IO;
 
 namespace QuickLaunch.Model
 {
-    using Launchables = Dictionary<string, ILaunchable>;
+    using Launchables = IDictionary<string, ILaunchable>;
     /// <summary>
     /// The application's model. Stores and interprets user-defined Launchables. Facilitates ViewModel's interaction with Launchables.
     /// </summary>
@@ -25,7 +25,7 @@ namespace QuickLaunch.Model
 
         public Launchables ReadFromFile()
         {
-            return Directory.Exists(SavePath) ? JsonConvert.DeserializeObject<Launchables>(SavePath) : new Launchables();
+            return Directory.Exists(SavePath) ? JsonConvert.DeserializeObject<Launchables>(SavePath) : new Dictionary<string, ILaunchable>();
         }
 
         public void WriteToFile()
