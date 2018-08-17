@@ -9,23 +9,28 @@ using System.IO;
 
 namespace QuickLaunch.Model
 {
-    using Launchables = Dictionary<string, Launchable>;
+    using Launchables = Dictionary<string, ILaunchable>;
     /// <summary>
     /// The application's model. Stores and interprets user-defined Launchables. Facilitates ViewModel's interaction with Launchables.
     /// </summary>
-    class Launcher
+    class Launcher : ILauncher
     {
         public string SavePath { get; set; } = $"{Path.Combine(Environment.SpecialFolder.ApplicationData.ToString(), "QuickLaunch/loadout.cfg")}";
-        public Launchables launchables;
+        public Launchables Launchables { get; set; }
 
         public Launcher()
         {
-            launchables = Directory.Exists(SavePath) ? JsonConvert.DeserializeObject<Launchables>(SavePath) : new Launchables();
+            Launchables = ReadFromFile();
         }
 
-        public void SaveToFile()
+        public Launchables ReadFromFile()
         {
-            var saveFileText = JsonConvert.SerializeObject(launchables);
+            return Directory.Exists(SavePath) ? JsonConvert.DeserializeObject<Launchables>(SavePath) : new Launchables();
+        }
+
+        public void WriteToFile()
+        {
+            var saveFileText = JsonConvert.SerializeObject(Launchables);
             using (StreamWriter sw = new StreamWriter(SavePath))
             {
                 sw.Write(saveFileText);

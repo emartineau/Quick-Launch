@@ -10,6 +10,6 @@ namespace QuickLaunch.ViewModel
     {
         public delegate void LauncherOp(QLViewModel qLViewModel);
 
-        public static LauncherOp SaveOp = (qlvm) => qlvm.Launcher.SaveToFile();
+        public static LauncherOp SaveOp = (qlvm) => qlvm.Launcher.WriteToFile();
     }
 }

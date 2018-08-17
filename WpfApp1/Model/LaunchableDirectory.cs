@@ -8,18 +8,27 @@ using System.Threading.Tasks;
 
 namespace QuickLaunch.Model
 {
-    class LaunchableDirectory : Launchable
+    class LaunchableDirectory : ILaunchable
     {
         private DirectoryInfo directoryInfo;
-        public new FileSystemInfo Info { get; }
+        public FileSystemInfo Info { get; }
 
-        public LaunchableDirectory(string path, string arguments, bool asAdmin = false) : base(path, arguments, asAdmin) { }
+        public ProcessStartInfo ProcessStart { get; private set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DirectoryInfo WorkingDirectory { get; set; }
+        public bool AsAdmin { get; set; }
+        public bool UseShell { get; set; }
+        public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "Powershell.exe");
+        public string ShellPrefix { get; set; }
 
-        public override void Start()
+        public LaunchableDirectory(string path, string arguments, bool asAdmin = false) { }
+
+        public void Start()
         {
             if (UseShell)
             {
-                processStart.WorkingDirectory = Info.FullName;
+                ProcessStart.WorkingDirectory = Info.FullName;
             }
             else
             {

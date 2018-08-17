@@ -10,9 +10,9 @@ namespace QuickLaunch.ViewModel
 {
     class LaunchCommand : ICommand
     {
-        private Launchable Launchable;
+        private ILaunchable Launchable;
 
-        public LaunchCommand(Launchable launchable)
+        public LaunchCommand(ILaunchable launchable)
         {
             Launchable = launchable;
         }

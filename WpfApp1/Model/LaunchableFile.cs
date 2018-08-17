@@ -8,33 +8,42 @@ using System.Threading.Tasks;
 
 namespace QuickLaunch.Model
 {
-    class LaunchableFile : Launchable
+    class LaunchableFile : ILaunchable
     {
         private FileInfo fileInfo;
         public new FileSystemInfo Info { get; }
 
-        public LaunchableFile(string path, string arguments, bool asAdmin = false) : base(path, arguments, asAdmin)
+        public ProcessStartInfo ProcessStart { get; private set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DirectoryInfo WorkingDirectory { get; set; }
+        public bool AsAdmin { get; set; }
+        public bool UseShell { get; set; }
+        public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "Powershell.exe");
+        public string ShellPrefix { get; set; }
+
+        public LaunchableFile(string path, string arguments, bool asAdmin = false)
         {
             InitializeProcess(arguments);
         }
 
-        public override void Start()
+        public void Start()
         {
             if (AsAdmin)
             {
-                processStart.UseShellExecute = AsAdmin;
-                processStart.Verb = "runas";
+                ProcessStart.UseShellExecute = AsAdmin;
+                ProcessStart.Verb = "runas";
             }
 
             if (UseShell)
             {
-                Process.Start(Shell, ShellPrefix + processStart.FileName + processStart.Arguments);
+                Process.Start(Shell, ShellPrefix + ProcessStart.FileName + ProcessStart.Arguments);
             }
             else
             {
                 Process p = new Process
                 {
-                    StartInfo = processStart
+                    StartInfo = ProcessStart
                 };
 
                 p.Start();
@@ -43,7 +52,7 @@ namespace QuickLaunch.Model
 
         private void InitializeProcess(string arguments)
         {
-            processStart = new ProcessStartInfo(Info.FullName)
+            ProcessStart = new ProcessStartInfo(Info.FullName)
             {
                 Arguments = arguments,
                 WorkingDirectory = this.WorkingDirectory.FullName

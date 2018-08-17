@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ILauncher.cs" />
     <Compile Include="Model\LaunchableDirectory.cs" />
     <Compile Include="Model\LaunchableFile.cs" />
     <Compile Include="ViewModel\LaunchCommand.cs" />
@@ -98,7 +99,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Launchable.cs" />
+    <Compile Include="Model\ILaunchable.cs" />
     <Compile Include="Model\Launcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
