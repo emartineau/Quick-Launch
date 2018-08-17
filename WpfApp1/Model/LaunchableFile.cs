@@ -10,15 +10,17 @@ namespace QuickLaunch.Model
 {
     class LaunchableFile : ILaunchable
     {
-        private FileInfo fileInfo;
-        public new FileSystemInfo Info { get; }
+        public FileSystemInfo Info { get; }
 
         public ProcessStartInfo ProcessStart { get; private set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DirectoryInfo WorkingDirectory { get; set; }
+
+        public bool CanLaunch { get => File.Exists(Info.FullName); }
         public bool AsAdmin { get; set; }
         public bool UseShell { get; set; }
+
         public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "Powershell.exe");
         public string ShellPrefix { get; set; }
 

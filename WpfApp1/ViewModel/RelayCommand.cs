@@ -23,7 +23,7 @@ namespace QuickLaunch.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute(); //TODO: Block if launchable file/folder path does not currently exist.
+            return _canExecute();
         }
 
         public void Execute(object parameter)

@@ -21,6 +21,7 @@ namespace QuickLaunch.Model
         FileSystemInfo Info { get; }
         DirectoryInfo WorkingDirectory { get; set; }
 
+        bool CanLaunch { get; }
         bool AsAdmin { get; set; }
         bool UseShell { get; set; }
         string Shell { get; set; }
