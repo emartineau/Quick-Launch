@@ -22,7 +22,7 @@ namespace QuickLaunch.ViewModel
 
         private void InitCommands()
         {
-            SaveConfig = new LauncherOpCommand(this, LauncherOps.SaveOp);
+            SaveConfig = new RelayCommand(() => Launcher.WriteToFile(), () => true);
         }
     }
 }

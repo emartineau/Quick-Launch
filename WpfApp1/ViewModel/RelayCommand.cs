@@ -8,25 +8,27 @@ using System.Windows.Input;
 
 namespace QuickLaunch.ViewModel
 {
-    class LaunchCommand : ICommand
+    class RelayCommand : ICommand
     {
-        private ILaunchable Launchable;
+        private readonly Action _execute;
+        private readonly Func<bool> _canExecute;
 
-        public LaunchCommand(ILaunchable launchable)
+        public RelayCommand(Action execute, Func<bool> canExecute)
         {
-            Launchable = launchable;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            return true; //TODO: Block if launchable file/folder path does not currently exist.
+            return _canExecute(); //TODO: Block if launchable file/folder path does not currently exist.
         }
 
         public void Execute(object parameter)
         {
-            Launchable.Start();
+            _execute();
         }
     }
 }
