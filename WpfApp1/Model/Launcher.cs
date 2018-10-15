@@ -15,7 +15,8 @@ namespace QuickLaunch.Model
     /// </summary>
     class Launcher : ILauncher
     {
-        public string SavePath { get; set; } = $"{Path.Combine(Environment.SpecialFolder.ApplicationData.ToString(), "QuickLaunch/loadout.cfg")}";
+        public string SaveFolderPath { get; set; } = Path.Combine(Environment.SpecialFolder.ApplicationData.ToString(), "QuickLaunch");
+        public string SavePath { get => Path.Combine(SaveFolderPath, "Loadout.cfg"); set => SavePath = value; }
         public Launchables Launchables { get; set; }
 
         public Launcher()
@@ -25,11 +26,13 @@ namespace QuickLaunch.Model
 
         public Launchables ReadFromFile()
         {
-            return Directory.Exists(SavePath) ? JsonConvert.DeserializeObject<Launchables>(SavePath) : new Dictionary<string, ILaunchable>();
+            return File.Exists(SavePath) ? JsonConvert.DeserializeObject<Launchables>(File.ReadAllText(SavePath)) : new Dictionary<string, ILaunchable>();
         }
 
         public void WriteToFile()
         {
+            if (!Directory.Exists(SaveFolderPath))
+                Directory.CreateDirectory(SaveFolderPath);
             var saveFileText = JsonConvert.SerializeObject(Launchables);
             using (StreamWriter sw = new StreamWriter(SavePath))
             {

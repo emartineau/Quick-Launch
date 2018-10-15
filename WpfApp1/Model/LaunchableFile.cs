@@ -10,7 +10,7 @@ namespace QuickLaunch.Model
 {
     class LaunchableFile : ILaunchable
     {
-        public FileSystemInfo Info { get; }
+        public FileInfo Info { get; }
 
         public ProcessStartInfo ProcessStart { get; private set; }
         public string Name { get; set; }
@@ -24,8 +24,11 @@ namespace QuickLaunch.Model
         public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "Powershell.exe");
         public string ShellPrefix { get; set; }
 
-        public LaunchableFile(string path, string arguments, bool asAdmin = false)
+        public LaunchableFile(string filePath, string dirPath, string arguments, bool asAdmin = false)
         {
+            Info = new FileInfo(filePath);
+            WorkingDirectory = new DirectoryInfo(string.IsNullOrEmpty(dirPath) ? Path.GetDirectoryName(filePath) : dirPath);
+            Name = Info.Name;
             InitializeProcess(arguments);
         }
 

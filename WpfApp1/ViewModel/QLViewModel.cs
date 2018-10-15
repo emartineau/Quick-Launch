@@ -8,6 +8,7 @@ using System.Windows.Input;
 
 namespace QuickLaunch.ViewModel
 {
+    
     class QLViewModel
     {
         public readonly ILauncher Launcher;
@@ -15,6 +16,11 @@ namespace QuickLaunch.ViewModel
         public QLViewModel()
         {
             Launcher = new Launcher();
+
+            Launchables.Add("SlideShow", new LaunchableFile(@"E:\Projects\Visual Studio\FileSlideShow\FileSlideShow\bin\Release\FileSlideShow.exe", "", "", true));
+
+            InitCommands();
+
         }
 
         public IDictionary<string, ILaunchable> Launchables { get => Launcher.Launchables; set => Launcher.Launchables = value; }
@@ -30,6 +36,7 @@ namespace QuickLaunch.ViewModel
             {
                 LaunchableExecutables.Add(launchable.Value.Name, new RelayCommand(() => launchable.Value.Start(), () => launchable.Value.CanLaunch));
             }
+            LaunchableExecutables.Add("Dummy", new RelayCommand(() => new LaunchableDirectory(@"C:\Users\Eric\Dummy", "", false), () => true));
         }
     }
 }

@@ -18,7 +18,6 @@ namespace QuickLaunch.Model
         string Name { get; set; }
         string Description { get; set; }
         
-        FileSystemInfo Info { get; }
         DirectoryInfo WorkingDirectory { get; set; }
 
         bool CanLaunch { get; }

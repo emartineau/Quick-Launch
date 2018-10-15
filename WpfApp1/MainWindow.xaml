@@ -7,15 +7,31 @@
         xmlns:local="clr-namespace:QuickLaunch"
         mc:Ignorable="d"
         Visibility="Hidden"
-        Title="MainWindow">
+        Title="MainWindow"
+        DataContext="{StaticResource VModel}">
+
+    <Window.Resources>
+        <Style x:Key="SubMenuItem" TargetType="{x:Type MenuItem}">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Background" Value="#222222"/>
+        </Style>
+    </Window.Resources>
 
     <tb:TaskbarIcon x:Name="NotifyIcon"
                     Visibility="Visible"
                     IconSource="Assets\Icons\QLauncher.ico"
                     MenuActivation="LeftOrRightClick">
         <tb:TaskbarIcon.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Save Profile" Command="{Binding SaveConfig}"/>
+            <ContextMenu Foreground="WhiteSmoke" Background="#222222">
+                <MenuItem Header="Save All Profiles" Command="{Binding SaveConfig}"/>
+                <Separator/>
+                <MenuItem Header="Profiles" ItemsSource="{Binding LaunchableExecutables}">
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate DataType="{x:Type KeyValueSerializer}">
+                            <MenuItem Header="{Binding Key}" Command="{Binding Value}" Style="{StaticResource SubMenuItem}"/>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
             </ContextMenu>
         </tb:TaskbarIcon.ContextMenu>
     </tb:TaskbarIcon>
