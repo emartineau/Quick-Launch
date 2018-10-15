@@ -11,9 +11,18 @@
         DataContext="{StaticResource VModel}">
 
     <Window.Resources>
+        <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
+            <StackPanel Margin="-20,0,0,0" Background="#222222"/>
+        </ItemsPanelTemplate>
         <Style x:Key="SubMenuItem" TargetType="{x:Type MenuItem}">
             <Setter Property="Foreground" Value="WhiteSmoke"/>
             <Setter Property="Background" Value="#222222"/>
+            <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+        </Style>
+        <Style x:Key="DefaultContextMenu" TargetType="{x:Type ContextMenu}">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
         </Style>
     </Window.Resources>
 
@@ -22,9 +31,9 @@
                     IconSource="Assets\Icons\QLauncher.ico"
                     MenuActivation="LeftOrRightClick">
         <tb:TaskbarIcon.ContextMenu>
-            <ContextMenu Foreground="WhiteSmoke" Background="#222222">
+            <ContextMenu Style="{StaticResource DefaultContextMenu}">
                 <MenuItem Header="Save All Profiles" Command="{Binding SaveConfig}"/>
-                <Separator/>
+                <Separator Background="#888888"/>
                 <MenuItem Header="Profiles" ItemsSource="{Binding LaunchableExecutables}">
                     <MenuItem.ItemTemplate>
                         <DataTemplate DataType="{x:Type KeyValueSerializer}">
@@ -32,6 +41,8 @@
                         </DataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
+                <Separator Background="#888888"/>
+                <MenuItem Header="Exit" Click="MenuItem_OnClick"/>
             </ContextMenu>
         </tb:TaskbarIcon.ContextMenu>
     </tb:TaskbarIcon>

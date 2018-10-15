@@ -24,5 +24,10 @@ namespace QuickLaunch
         {
             InitializeComponent();
         }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
