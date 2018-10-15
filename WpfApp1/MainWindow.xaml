@@ -11,17 +11,20 @@
         DataContext="{StaticResource VModel}">
 
     <Window.Resources>
+        <SolidColorBrush x:Key="TextColor" Color="WhiteSmoke"/>
+        <SolidColorBrush x:Key="MenuItemColor" Color="#222222"/>
+        <SolidColorBrush x:Key="SeparatorColor" Color="#888888"/>
         <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
-            <StackPanel Margin="-20,0,0,0" Background="#222222"/>
+            <StackPanel Margin="-20,0,0,0" Background="{StaticResource MenuItemColor}"/>
         </ItemsPanelTemplate>
         <Style x:Key="SubMenuItem" TargetType="{x:Type MenuItem}">
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
-            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="Background" Value="{StaticResource MenuItemColor}"/>
             <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
         </Style>
         <Style x:Key="DefaultContextMenu" TargetType="{x:Type ContextMenu}">
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
-            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="Background" Value="{StaticResource MenuItemColor}"/>
             <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
         </Style>
     </Window.Resources>
@@ -33,7 +36,7 @@
         <tb:TaskbarIcon.ContextMenu>
             <ContextMenu Style="{StaticResource DefaultContextMenu}">
                 <MenuItem Header="Save All Profiles" Command="{Binding SaveConfig}"/>
-                <Separator Background="#888888"/>
+                <Separator Background="{StaticResource SeparatorColor}"/>
                 <MenuItem Header="Profiles" ItemsSource="{Binding LaunchableExecutables}">
                     <MenuItem.ItemTemplate>
                         <DataTemplate DataType="{x:Type KeyValueSerializer}">
@@ -41,7 +44,7 @@
                         </DataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
-                <Separator Background="#888888"/>
+                <Separator Background="{StaticResource SeparatorColor}"/>
                 <MenuItem Header="Exit" Click="MenuItem_OnClick"/>
             </ContextMenu>
         </tb:TaskbarIcon.ContextMenu>
