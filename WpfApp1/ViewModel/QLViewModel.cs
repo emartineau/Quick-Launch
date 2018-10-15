@@ -34,7 +34,7 @@ namespace QuickLaunch.ViewModel
             LaunchableExecutables = new Dictionary<string, ICommand>();
             foreach (var launchable in Launchables)
             {
-                LaunchableExecutables.Add(launchable.Value.Name, new RelayCommand(() => launchable.Value.Start(), () => launchable.Value.CanLaunch));
+                LaunchableExecutables.Add(launchable.Key, new RelayCommand(() => launchable.Value.Start(), () => launchable.Value.CanLaunch));
             }
             LaunchableExecutables.Add("Dummy", new RelayCommand(() => new LaunchableDirectory(@"C:\Users\Eric\Dummy", "", false), () => true));
         }

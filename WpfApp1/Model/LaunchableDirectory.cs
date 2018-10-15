@@ -19,20 +19,25 @@ namespace QuickLaunch.Model
         public bool AsAdmin { get; set; }
         public bool UseShell { get; set; }
 
-        public string Shell { get; set; } = Path.Combine(Environment.SpecialFolder.System.ToString(), "Powershell.exe");
+        public string Shell { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\Powershell.exe");
         public string ShellPrefix { get; set; }
 
-        public LaunchableDirectory(string path, string arguments, bool asAdmin = false)
+        public LaunchableDirectory(string path, string arguments, bool useShell = false, bool asAdmin = false)
         {
             WorkingDirectory = new DirectoryInfo(path);
-            ProcessStart = new ProcessStartInfo(Shell);
+            UseShell = useShell;
+            AsAdmin = asAdmin;
+            Name = WorkingDirectory.Name;
         }
 
         public void Start()
         {
             if (UseShell)
             {
-                ProcessStart.WorkingDirectory = WorkingDirectory.FullName;
+                ProcessStart = new ProcessStartInfo(Shell)
+                {
+                    WorkingDirectory = WorkingDirectory.FullName
+                };
                 Process.Start(ProcessStart);
             }
             else
