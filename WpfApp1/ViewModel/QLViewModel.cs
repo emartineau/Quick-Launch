@@ -1,6 +1,7 @@
 ﻿using QuickLaunch.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,12 @@ namespace QuickLaunch.ViewModel
         {
             Launcher = new Launcher();
 
-            Launchables.Add("SlideShow", new LaunchableFile(@"E:\Projects\Visual Studio\FileSlideShow\FileSlideShow\bin\Release\FileSlideShow.exe", "", "", true));
+            string makePath(string path) => Path.Combine(Environment.CurrentDirectory, @"ApplicationData\", path);
+
+            Launchables.Add("SlideShow", new LaunchableFile(makePath(@"Demo\FileSlideShow.exe"), "", ""));
+            Launchables.Add("PowerShell-Project", new LaunchableDirectory(makePath(@"Demo\"), "", true));
+            Launchables.Add("Py Batch Save", new LaunchableFile(makePath(@"Demo\BatchSave.py"), "", "", false, false, "/C python"));
+            Launchables.Add("Py Dupe Check", new LaunchableFile(makePath(@"Demo\DupeCheck.py"), "", "Collection", false, false, "/C python"));
 
             InitCommands();
 
@@ -36,7 +42,6 @@ namespace QuickLaunch.ViewModel
             {
                 LaunchableExecutables.Add(launchable.Key, new RelayCommand(() => launchable.Value.Start(), () => launchable.Value.CanLaunch));
             }
-            LaunchableExecutables.Add("Dummy", new RelayCommand(() => new LaunchableDirectory(@"C:\Users\Eric\Dummy", "", false), () => true));
         }
     }
 }

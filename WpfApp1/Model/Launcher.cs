@@ -18,6 +18,8 @@ namespace QuickLaunch.Model
         public string SaveFolderPath { get; set; } = Path.Combine(Environment.SpecialFolder.ApplicationData.ToString(), "QuickLaunch");
         public string SavePath { get => Path.Combine(SaveFolderPath, "Loadout.cfg"); set => SavePath = value; }
         public Launchables Launchables { get; set; }
+        private Dictionary<string, LaunchableFile> LFiles { get; }
+        private Dictionary<string, LaunchableDirectory> LDirs { get; }
 
         public Launcher()
         {
@@ -34,9 +36,11 @@ namespace QuickLaunch.Model
             if (!Directory.Exists(SaveFolderPath))
                 Directory.CreateDirectory(SaveFolderPath);
             var saveFileText = JsonConvert.SerializeObject(Launchables);
+            var FilesConfig = JsonConvert.SerializeObject(LFiles);
+            var DirsConfig = JsonConvert.SerializeObject(LDirs);
             using (StreamWriter sw = new StreamWriter(SavePath))
             {
-                sw.Write(saveFileText);
+                sw.Write($"{FilesConfig}\n---------\n{DirsConfig}");
                 sw.Close();
             }
         }

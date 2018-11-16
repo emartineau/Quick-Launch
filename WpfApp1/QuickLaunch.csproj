@@ -147,5 +147,6 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\QLauncher.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
